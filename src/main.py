@@ -7,9 +7,9 @@ import esp
 import machine
 from neopixel import NeoPixel
 from umqttsimple import MQTTClient
+from machine import Pin
+from time import sleep
 
-esp.osdebug(None)
-gc.collect()
 
 n = 12
 p = 5
@@ -55,12 +55,12 @@ def restart_and_reconnect():
     machine.reset()
 
 # Read secret
-try:
-    with open('secrets.json') as fp:
-        secrets = ujson.loads(fp.read())
-except OSError as e:
-    print("secrets.json file is missing")
-    restart_and_reconnect()
+#try:
+#    with open('secrets.json') as fp:
+#        secrets = ujson.loads(fp.read())
+#except OSError as e:
+#    print("secrets.json file is missing")
+#    restart_and_reconnect()
 
 # Connect network
 # try:
@@ -69,9 +69,19 @@ except OSError as e:
 # except OSError as e:
 #     print("Network connection is not possible")
 #     restart_and_reconnect()
+print("soil")
 
+from machine import I2C
+i2c = I2C(scl=Pin(22), sda=Pin(21))
+addr = i2c.scan()
+print("size: "+ str(len(addr)))
+for i in addr:
+    print("addr : " + str(i))
 
+print("start")
 clear()
-while True:
-    set_color(255, 0, 0)
+#while True:
+   # print('val : '+ soil_sensor.read())
+    #sleep(0.1)
+#    set_color(255, 0, 0)
     
