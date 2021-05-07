@@ -10,6 +10,9 @@ from umqttsimple import MQTTClient
 from machine import Pin
 from time import sleep
 
+# Bleu G5
+# Violet GND
+# Vert 5V
 
 n = 12
 p = 5 # PIN G5
