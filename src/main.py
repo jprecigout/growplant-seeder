@@ -4,7 +4,7 @@ import ujson
 import ubinascii
 import network
 import esp
-import machine
+import machine, time
 from neopixel import NeoPixel
 from umqttsimple import MQTTClient
 from machine import Pin
@@ -12,7 +12,7 @@ from time import sleep
 
 
 n = 12
-p = 5
+p = 5 # PIN G5
 
 np = NeoPixel(machine.Pin(p), n)
 
@@ -71,12 +71,25 @@ def restart_and_reconnect():
 #     restart_and_reconnect()
 print("soil")
 
-from machine import I2C
-i2c = I2C(scl=Pin(22), sda=Pin(21))
-addr = i2c.scan()
-print("size: "+ str(len(addr)))
-for i in addr:
-    print("addr : " + str(i))
+
+addr_i2c = 0x20
+
+#from machine import I2C
+#import machine
+#i2c = I2C(scl=Pin(22), sda=Pin(21), mode=I2C.SLAVE)
+
+from pyb import I2C
+SLAVE_ADDRESS = 0x42
+BAUDRATE = 100000
+
+i2c_slave = I2C(1, I2C.SLAVE, addr=SLAVE_ADDRESS, baudrate=BAUDRATE)
+i2c_slave.write(0x20, 6)
+
+
+# addr = i2c.scan()
+# print("size: "+ str(len(addr)))
+# for i in addr:
+#     print("addr : " + str(i))
 
 print("start")
 clear()
